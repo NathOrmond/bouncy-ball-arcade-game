@@ -23,11 +23,6 @@ import gameobjects.ScoreUp;
 import resources.Resources;
 
 /**
- * Log //////////////////////////////////// 
- * 2.39 
- * 11/07/2017: 2.24 
- * 12/07/2018: 2.36
- * ////////////////////////////////////// 
  *
  * @author Nathan Ormond
  */
@@ -286,6 +281,7 @@ public class StartingPoint extends Applet implements Runnable, KeyListener, Mous
 			Resources.level = 1;
 			mouseIn = false;
 			gameOver = false;
+			initialPlatformBehaviours();
 		} 
 	}
 	
@@ -368,7 +364,6 @@ public class StartingPoint extends Applet implements Runnable, KeyListener, Mous
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
 	}
 
 
