@@ -6,11 +6,20 @@ import java.net.URL;
 
 import runtime.StartingPoint;
 
+/***
+ * 
+ * Acts as pointer to resource variables such as skins,
+ * images and audio. called upon start of programme from StartingPoint 
+ * class where variables are initialised within constructor.
+ * 
+ * @author Nathan Ormond
+ *
+ */
+
 public class Resources {
 
 	public static StartingPoint sp;
-	public static Image platform;
-	static Image ball;
+	public static Image platform, ball, backGroundImage;
 	URL url;
 	public static AudioClip music, bounce, goodItem, badItem;
 	public static int level = 1;
@@ -18,22 +27,24 @@ public class Resources {
 	public Resources(StartingPoint sp) {
 		this.sp = sp;
 		resetURL();
-		platformSkin();
+		imageResources();
 		audioResources();
 	}
 	
 	private void audioResources() { 
 		resetURL();
-		music = sp.getAudioClip(url, "resources/audio/all_star.au");
+		music = sp.getAudioClip(url, "resources/audio/pumped_up_kicks.au");
 		bounce = sp.getAudioClip(url, "resources/audio/ball_bounce.au");
 		goodItem = sp.getAudioClip(url, "resources/audio/wand_chime.au");
 		badItem = sp.getAudioClip(url, "resources/audio/bomb_siren.au");
 	}
 	
-	private void platformSkin() { 
+	private void imageResources() { 
 		platform = sp.getImage(url, "resources/skins/bricks.png");
+		backGroundImage = sp.getImage(url, "resources/images/metropolis.png");
 		resetURL();
 	}
+	
 
 	private void resetURL() {
 		try {

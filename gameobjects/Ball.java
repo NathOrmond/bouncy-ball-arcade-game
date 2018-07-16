@@ -20,6 +20,8 @@ public class Ball {
 	private double gameDy = -80;
 	private int agility = 3;
 	private int maxSpeed = 20;
+	private boolean gameOver;
+	private StartingPoint sp;
 
 	public Ball() {
 	}
@@ -59,6 +61,10 @@ public class Ball {
 	}
 
 	public void update(StartingPoint sp) {
+		this.sp = sp;
+		
+		/** Horizontal wall collisions **/
+		
 		if (x + dx > sp.getWidth() - radius - 1) {
 			x = sp.getWidth() - radius - 1;
 			dx = -dx;
@@ -71,34 +77,37 @@ public class Ball {
 			x += dx;
 		}
 
+		
+		/** Vertical wall collisions **/
+		
 		if (y == sp.getHeight() - radius - 1) {
 			dx *= xFriction;
 			if (Math.abs(dx) < .8) {
 				dx = 0;
 			}
 		}
-		if (y > sp.getHeight() - radius - 1) {
-			y = sp.getHeight() - radius - 1;
-			dy *= energyLoss;
-			dy = -dy;
-			Resources.bounce.play();
+		if (y - 100 > sp.getHeight() - radius - 1) {
+			
+			gameOver = true;
+//			bounceOffYBoundary();
+
 		} else {
 			dy = dy + gravity * dt;
 			y += dy * dt + .5 * gravity * dt * dt;
 		}
-		
-		// Pass "Behind Brick" graphic - todo
-//		if(dy < 0 ) {
-//			radius = radius -1;
-//		} else { 
-//			radius = radius +1;
-//		}
+	
+	}
+	
+	private void bounceOffYBoundary() { 
+		y = sp.getHeight() - radius - 1;
+		dy *= energyLoss;
+		dy = -dy;
+		Resources.bounce.play();
 	}
 
 	public void paint(Graphics g) {
 		g.setColor(Color.CYAN);
 		g.fillOval(x - radius, y - radius, radius * 2, radius * 2);
-
 	}
 
 	/**************************************************
@@ -172,7 +181,13 @@ public class Ball {
 	public void setGameDy(double gameDy) {
 		this.gameDy = gameDy;
 	}
+	
+	public boolean getGameOver() {
+		return gameOver;
+	}
+	
 	/**
 	 * --------------------------------------------
 	 */
+
 }

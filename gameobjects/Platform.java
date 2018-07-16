@@ -20,7 +20,7 @@ public class Platform {
 	public Platform(int x, int y) {
 		this.x = x;
 		this.y = y;
-		width = 120;
+		width = 150;
 		height = 40;
 		dx = -1;
 		platform = Resources.platform;
