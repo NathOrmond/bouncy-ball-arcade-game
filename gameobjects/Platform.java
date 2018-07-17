@@ -20,7 +20,7 @@ public class Platform {
 	public Platform(int x, int y) {
 		this.x = x;
 		this.y = y;
-		width = 150;
+		width = 180;
 		height = 40;
 		dx = -1;
 		platform = Resources.platform;
@@ -61,14 +61,11 @@ public class Platform {
 	}
 
 	public void paint(Graphics g) {
-
 		int scaleFactor = 1;
-
 		g.setColor(Color.BLUE);
 		g.fillRect(x, y, width, height);
 //		g.drawImage(platform, x, y, Pictures.sp);
 		g.drawImage(platform, x, y, (x + scaleFactor * width), (y + scaleFactor * height), 0, 40 * (int) frame, 120, 40 * (int) frame + 40, Resources.sp);
-
 	}
 
 	/**************************************************
