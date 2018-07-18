@@ -2,7 +2,6 @@ package resources;
 
 import java.applet.AudioClip;
 import java.awt.Image;
-import java.io.File;
 import java.net.URL;
 
 import runtime.StartingPoint;
@@ -35,7 +34,7 @@ public class Resources {
 	}
 	
 	private void audioResources() { 
-		music = sp.getAudioClip(url, "resources/audio/pumped_up_kicks.au");
+		music = sp.getAudioClip(url, "resources/audio/all_star.au");
 		bounce = sp.getAudioClip(url, "resources/audio/ball_bounce.au");
 		goodItem = sp.getAudioClip(url, "resources/audio/wand_chime.au");
 		badItem = sp.getAudioClip(url, "resources/audio/bomb_siren.au");

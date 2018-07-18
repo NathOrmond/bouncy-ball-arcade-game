@@ -27,6 +27,12 @@ import leaderboard.WriteToLeaderFile;
 import resources.Resources;
 
 /**
+ * THIS BOUNCY BALL GAME IS AN EXTENSION ON THE YOUTUBER "MYBRINGBACK"'S 
+ * JAVA GAME WITH CUSTOM CLASSES, METHODS, GRAPHICS AND CODE REFRACTORING. 
+ * WRITTEN BY NATHAN ORMOND 18/07/2018 
+ * OPEN LICENSE (FEEL FREE TO COPY AND CHANGE) :)
+ * 
+ * 
  * @author Nathan Ormond
  */
 
@@ -211,17 +217,33 @@ public class StartingPoint extends Applet implements Runnable, KeyListener, Mous
 		}
 	}
 	
+	/**** if !highScoreEntered ****/
+	
+	/**
+	 * paints enter name instructions
+	 * @param g
+	 */
 	private void paintEnterName(Graphics g) {
 		String str = "ENTER NAME : ";
 		g.drawString(str, getWidth() / 2 - (str.length() * 10), getHeight() / 2 );
 	}
 	
+	/**
+	 * paints name as it is typed
+	 * @param g
+	 */
 	private void paintTypedName(Graphics g) { 
 		String str = nameText;
 		g.drawString(str, getWidth() / 2 - (str.length() * 10), getHeight() / 2 + 40);
 	}
 
 	
+	/**** if highScoreEntered ****/
+	
+	/**
+	 * Iterates through top 3 highest scores and paints them as leaderboard
+	 * @param g
+	 */
 	private void paintTopThreeScores(Graphics g) { 
 		
 		List<String> topThree = null;
@@ -247,12 +269,21 @@ public class StartingPoint extends Applet implements Runnable, KeyListener, Mous
 		}
 	}
 
+	/**
+	 * paints "Game Over" instructions
+	 * @param g
+	 */
 	private void gameOverGraphic(Graphics g) {
 		g.setColor(Color.WHITE);
 		String str = "GAME OVER ";
 		g.drawString(str, getWidth() / 2 - (str.length() * 10), getHeight() / 2);
 	}
 
+	/**
+	 * Paints continue menu option. 
+	 * Changes colour when mouse hovers over it
+	 * @param g
+	 */
 	private void continueGraphics(Graphics g) {
 		if (mouseIn) {
 			g.setColor(Color.RED);
