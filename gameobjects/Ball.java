@@ -2,7 +2,6 @@ package gameobjects;
 
 import java.awt.Color;
 import java.awt.Graphics;
-
 import resources.Resources;
 import runtime.StartingPoint;
 
@@ -98,6 +97,9 @@ public class Ball {
 	
 	}
 	
+	
+	//not implemented
+	@SuppressWarnings("unused")
 	private void bounceOffYBoundary() { 
 		y = sp.getHeight() - radius - 1;
 		dy *= energyLoss;

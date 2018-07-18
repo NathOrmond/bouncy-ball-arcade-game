@@ -10,8 +10,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.Random;
 import gameobjects.AgilityDown;
 import gameobjects.AgilityUp;
@@ -22,6 +23,7 @@ import gameobjects.Item;
 import gameobjects.Platform;
 import gameobjects.ScoreUp;
 import leaderboard.ReadLeaderFile;
+import leaderboard.WriteToLeaderFile;
 import resources.Resources;
 
 /**
@@ -199,17 +201,10 @@ public class StartingPoint extends Applet implements Runnable, KeyListener, Mous
 	 */
 	private void paintMenu(Graphics g) {
 		if (!highScoresEntered) {
-			if (checkIfScoreIsInTopTen()) {
-				if (checkIfScoreIsHighScore()) {
-					paintNewHighScore(g);
-				}
 				paintEnterName(g);
 				paintTypedName(g);
-			} else { 
-				highScoresEntered = true;
-			}
+			 
 		} else { 
-			paintScoreTooLowForLeaderBoard(g);
 			paintTopThreeScores(g);
 			gameOverGraphic(g);
 			continueGraphics(g);
@@ -218,7 +213,7 @@ public class StartingPoint extends Applet implements Runnable, KeyListener, Mous
 	
 	private void paintEnterName(Graphics g) {
 		String str = "ENTER NAME : ";
-		g.drawString(str, getWidth() / 2 - (str.length() * 10), getHeight() / 2 + 40);
+		g.drawString(str, getWidth() / 2 - (str.length() * 10), getHeight() / 2 );
 	}
 	
 	private void paintTypedName(Graphics g) { 
@@ -226,21 +221,30 @@ public class StartingPoint extends Applet implements Runnable, KeyListener, Mous
 		g.drawString(str, getWidth() / 2 - (str.length() * 10), getHeight() / 2 + 40);
 	}
 
-	private void paintNewHighScore(Graphics g) { 
-		String str = "NEW HIGH SCORE!";
-		g.drawString(str, getWidth() / 2 - (str.length() * 10), getHeight() / 2 + 40);
-		
-	}
-	
-	private void paintScoreTooLowForLeaderBoard(Graphics g) { 
-		String str = "SCORE TOO LOW FOR LEADERBOARD";
-		g.drawString(str, getWidth() / 2 - (str.length() * 10), getHeight() / 2 + 40);
-		
-	}
 	
 	private void paintTopThreeScores(Graphics g) { 
-		String str = "1), 2), 3)";
-		g.drawString(str, getWidth() / 2 - (str.length() * 10), getHeight() / 2 + 40);
+		
+		List<String> topThree = null;
+		ReadLeaderFile read;
+		
+		try {
+			read = new ReadLeaderFile();
+			topThree = read.topThreeResults();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		if (topThree.size() > 1) {
+			
+			int margin = -240;
+			for (String str : topThree) {
+				g.drawString(str, getWidth() / 2 - (str.length() * 10), getHeight() / 2 - margin);
+				margin = margin + 40;
+			}
+			
+			String str = "HIGH SCORES:";
+			g.drawString(str, getWidth() / 2 - (str.length() * 10), getHeight() / 2 - margin);
+		}
 	}
 
 	private void gameOverGraphic(Graphics g) {
@@ -295,6 +299,20 @@ public class StartingPoint extends Applet implements Runnable, KeyListener, Mous
 		}
 		return false;
 	}
+	
+	/**
+	 * Writes latest score to leaderboard file alongside name. 
+	 * resets name variable so previously typed one is not carried forward in variable
+	 * for next run
+	 */
+	private void writeNewLeaderBoardScore() { 
+			WriteToLeaderFile write = new WriteToLeaderFile();
+			write.appendLeaderBoard(nameText, Integer.toString(score));
+			nameText = "";
+	}
+	
+		
+
 
 	/**************************************************
 	 * Game Object methods
@@ -306,7 +324,6 @@ public class StartingPoint extends Applet implements Runnable, KeyListener, Mous
 	 */
 	private void initialPlatformBehaviours() {
 		for (int i = 0; i < platforms.length; i++) {
-			Random r = new Random();
 			platforms[i] = new Platform(i * 160, 300);
 		}
 	}
@@ -356,19 +373,6 @@ public class StartingPoint extends Applet implements Runnable, KeyListener, Mous
 		initialPlatformBehaviours();
 	}
 
-	private boolean checkIfScoreIsInTopTen() {
-		return false;
-	}
-
-	private boolean checkIfScoreIsHighScore() {
-		ReadLeaderFile read = new ReadLeaderFile();
-		try {
-			read.readFileTokens();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
 
 	/**************************************************
 	 * Event Actions (Overridden)
@@ -392,6 +396,7 @@ public class StartingPoint extends Applet implements Runnable, KeyListener, Mous
 					break;
 			
 				case KeyEvent.VK_ENTER: 
+					writeNewLeaderBoardScore();
 					highScoresEntered = true;
 					break;
 			}
@@ -461,6 +466,15 @@ public class StartingPoint extends Applet implements Runnable, KeyListener, Mous
 		this.score = score;
 	}
 
+	/**
+	 * Defines the parameters of a recatangle within which the mouse
+	 * will be for an event.
+	 * 
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param Eph
+	 */
 	private void setMouseBoxVariables(int x, int y, int z, int Eph) {
 		this.mouseBoxX = x;
 		this.mouseBoxY = y;

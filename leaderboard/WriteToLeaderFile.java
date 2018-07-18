@@ -2,28 +2,38 @@ package leaderboard;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.io.Writer;
 
 import resources.Resources;
 
 public class WriteToLeaderFile {
 	
-	public WriteToLeaderFile() {
-		// TODO Auto-generated constructor stub
+	
+	public WriteToLeaderFile(){
+
 	}
 	
-	  public void appendLeaderBoard(String line) {
-	        try {
-	            FileOutputStream is = new FileOutputStream(Resources.leaderTable);
-	            OutputStreamWriter osw = new OutputStreamWriter(is);    
-	            Writer w = new BufferedWriter(osw);
-	            w.append(line + "\n");
-	            w.close();
-	        } catch (IOException e) {
-	            System.err.println("Problem writing to the file statsTest.txt");
-	        }
+	/**
+	 * Appends to end of leaderboard csv name and score values
+	 * 
+	 * @param name
+	 * @param score
+	 */
+	  public void appendLeaderBoard(String name, String score) {
+		  String line = name + "," + score;
+	        try { 
+	            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(Resources.leaderTable, true)));
+	            out.println(line + ",");
+	            out.flush();
+	            out.close();
+	          }
+	          catch (IOException e) {  
+	            
+	          }
 	    }
 
 }

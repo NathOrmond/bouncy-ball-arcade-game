@@ -24,13 +24,14 @@ public class Resources {
 	URL url;
 	public static AudioClip music, bounce, goodItem, badItem;
 	public static int level = 1;
-	public static File leaderTable;
+	public static String leaderTable;
 
 	public Resources(StartingPoint sp) {
-		this.sp = sp;
+		Resources.sp = sp;
 		resetURL();
 		imageResources();
 		audioResources();
+		fileResources();
 	}
 	
 	private void audioResources() { 
@@ -46,7 +47,7 @@ public class Resources {
 	}
 	
 	private void fileResources() { 
-		leaderTable = new File(url + "resources/persistent/scores/leadertable.csv");
+		leaderTable = System.getProperty("user.dir") + "/../src/resources/persistent/scores/leadertable.csv";
 	}
 	
 

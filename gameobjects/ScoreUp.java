@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
-import resources.Resources;
 import runtime.StartingPoint;
 
 public class ScoreUp extends Item {

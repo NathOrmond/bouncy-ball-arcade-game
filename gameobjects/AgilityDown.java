@@ -3,8 +3,6 @@ package gameobjects;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import resources.Resources;
-
 public class AgilityDown extends Item {
 
 	private int increment = 1;
